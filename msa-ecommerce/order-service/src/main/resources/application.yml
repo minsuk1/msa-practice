@@ -1,0 +1,46 @@
+
+server:
+  port: 0
+
+spring:
+  application:
+    name: order-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 1234
+    url: jdbc:mysql://localhost:3306/msa?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+  profiles:
+    include: oauth
+  session:
+    jdbc:
+      initialize-schema: always
+
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://127.0.0.1:8761/eureka
+
+logging:
+  level:
+    com.example.catalogservice: DEBUG

@@ -17,10 +17,13 @@ public class CatalogEntity implements Serializable {
 
     @Column(nullable = false, length = 120, unique = true)
     private String productId;
+
     @Column(nullable = false)
     private String productName;
+
     @Column(nullable = false)
     private Integer stock;
+
     @Column(nullable = false)
     private Integer unitPrice;
 
