@@ -1,6 +1,7 @@
 package com.example.catalogservice.controller;
 
 import com.example.catalogservice.domain.CatalogEntity;
+import com.example.catalogservice.service.CatalogService;
 import com.example.catalogservice.service.CatalogServiceImpl;
 import com.example.catalogservice.vo.ResponseCatalog;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.List;
 public class CatalogController {
 
     private final Environment env;
-    private final CatalogServiceImpl catalogServiceImpl;
+    private final CatalogService catalogService;
 
     @GetMapping("/health_check")
     public String status(){
@@ -29,15 +30,15 @@ public class CatalogController {
     }
 
     @GetMapping("/catalogs")
-    public List<ResponseCatalog> getCatalogs() {
-//        Iterable<CatalogEntity> catalogList = catalogService.getAllCatalogs();
-//
-//        List<ResponseCatalog> result = new ArrayList<>();
-//        catalogList.forEach(v -> {
-//            result.add(new ModelMapper().map(v, ResponseCatalog.class));
-//        });
+    public ResponseEntity<List<ResponseCatalog>> getCatalogs() {
+        Iterable<CatalogEntity> catalogList = catalogService.getAllCatalogs();
 
-        return catalogServiceImpl.getAllCatalogs();
+        List<ResponseCatalog> result = new ArrayList<>();
+        catalogList.forEach(v -> {
+            result.add(new ModelMapper().map(v, ResponseCatalog.class));
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
 }

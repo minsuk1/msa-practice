@@ -2,24 +2,24 @@ package com.example.catalogservice.service;
 
 import com.example.catalogservice.domain.CatalogEntity;
 import com.example.catalogservice.domain.CatalogRepository;
-import com.example.catalogservice.vo.ResponseCatalog;
-import lombok.RequiredArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+@Data
+@Slf4j
 @Service
-@RequiredArgsConstructor
-public class CatalogServiceImpl{
+public class CatalogServiceImpl implements CatalogService{
+    CatalogRepository catalogRepository;
 
-    private final CatalogRepository catalogRepository;
+    @Autowired
+    public CatalogServiceImpl(CatalogRepository catalogRepository) {
+        this.catalogRepository = catalogRepository;
+    }
 
-    public List<ResponseCatalog> getAllCatalogs() {
-        return catalogRepository.findAllDesc().stream()
-                .map(ResponseCatalog::new) //map(posts -> new PostsListResponseDto(posts)
-                .collect(Collectors.toList());
+    @Override
+    public Iterable<CatalogEntity> getAllCatalogs() {
+        return catalogRepository.findAll();
     }
 }

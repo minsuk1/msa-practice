@@ -7,19 +7,12 @@ import lombok.Getter;
 
 import java.util.Date;
 
-@Getter
+@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseCatalog {
     private String productId;
     private String productName;
     private Integer unitPrice;
     private Integer stock;
     private Date createdAt;
-
-    public ResponseCatalog(CatalogEntity entity) {
-        this.productId = entity.getProductId();
-        this.productName = entity.getProductName();
-        this.unitPrice = entity.getUnitPrice();
-        this.stock = entity.getStock();
-        this.createdAt = entity.getCreatedAt();
-    }
 }
