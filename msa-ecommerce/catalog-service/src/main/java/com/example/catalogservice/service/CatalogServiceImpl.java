@@ -3,20 +3,18 @@ package com.example.catalogservice.service;
 import com.example.catalogservice.domain.CatalogEntity;
 import com.example.catalogservice.domain.CatalogRepository;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Data
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CatalogServiceImpl implements CatalogService{
-    CatalogRepository catalogRepository;
-
-    @Autowired
-    public CatalogServiceImpl(CatalogRepository catalogRepository) {
-        this.catalogRepository = catalogRepository;
-    }
+    private final CatalogRepository catalogRepository;
 
     @Override
     public Iterable<CatalogEntity> getAllCatalogs() {
