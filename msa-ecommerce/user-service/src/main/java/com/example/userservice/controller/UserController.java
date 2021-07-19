@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user-service")
+@RequestMapping("/")
 public class UserController {
 
 
