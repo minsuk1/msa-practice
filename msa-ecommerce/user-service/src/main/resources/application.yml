@@ -42,3 +42,8 @@ eureka:
 
 greeting:
   message: welcome to e-commerce
+
+
+token:
+  expiration_time: 86400000
+  secret: user_token

@@ -1,0 +1,18 @@
+스프링 시큐어리티
+
+스프링시큐리티는 각각의 역할에 맞는 작업을 처리하는 여러개의 필터들이 체인형태로 구성되어 순서에 따라 순차적으로 실행
+Authentication: UsenamePasswordAuthenticationFilter
+Authorize: FilterSecurityInterceptor
+
+
+UsernamePasswordAuthenticationFilter: 인증 처리 담당
+
+loadUserByUsername: 회원 정보 유무 찾기
+
+1. username/pw 가지고 AuthenticationFilter의 attemptAuthentication가 처리
+    UsernamePasswordAuthenticationToken 형태로 변환
+
+2. UserDetailService의 loadUserByUsername()통해 사용자 유무 찾기
+   이후, User라는 객체로 사용
+
+3. 로그인 성공 후 successfulAuthentication 여기서 토큰 발급
