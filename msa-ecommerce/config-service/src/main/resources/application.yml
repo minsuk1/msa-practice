@@ -8,4 +8,5 @@ spring:
     config:
       server:
         git:
-          uri: file://C:/Users/palt1/Desktop/applications
+          # uri: file://C:/Users/palt1/Desktop/applications
+          uri: https://github.com/minsuk1/spring-cloud-config
