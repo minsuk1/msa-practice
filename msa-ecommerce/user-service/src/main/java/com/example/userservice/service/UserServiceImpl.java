@@ -1,5 +1,8 @@
 package com.example.userservice.service;
 
+
+
+import com.example.userservice.client.OrderServiceClient;
 import com.example.userservice.domain.UserEntity;
 import com.example.userservice.domain.UserRepository;
 import com.example.userservice.dto.UserDto;
@@ -30,6 +33,7 @@ public class UserServiceImpl implements UserService{
     private final BCryptPasswordEncoder passwordEncoder;
     private final Environment env;
     private final RestTemplate restTemplate;
+    private final OrderServiceClient orderServiceClient;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -68,16 +72,31 @@ public class UserServiceImpl implements UserService{
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
-        // List<ResponseOrder> orders = new ArrayList<>();
+
+        // RestTemplate
         // OrderService의 Controller에 있는 API
-        String orderUrl = String.format(env.getProperty("order-service.url"), userId);
-        //String tmp = "http://127.0.0.1:8000/order-service/%s/orders";
-        //String orderUrl = String.format(tmp, userId);
-        ResponseEntity<List<ResponseOrder>> orderListRespone =
-                restTemplate.exchange(orderUrl, HttpMethod.GET, null,
-                        new ParameterizedTypeReference<List<ResponseOrder>>() {
-        });
-        List<ResponseOrder> orderList = orderListRespone.getBody();
+//        String orderUrl = String.format(env.getProperty("order-service.url"), userId);
+//        //String tmp = "http://127.0.0.1:8000/order-service/%s/orders";
+//        //String orderUrl = String.format(tmp, userId);
+//        ResponseEntity<List<ResponseOrder>> orderListRespone =
+//                restTemplate.exchange(orderUrl, HttpMethod.GET, null,
+//                        new ParameterizedTypeReference<List<ResponseOrder>>() {
+//        });
+//        List<ResponseOrder> orderList = orderListRespone.getBody();
+
+         // Feign exception 처리: 다른 서비스 ENDPOINT가 잘못되었을 때 현재 서비스 정보만이라도 불러옴
+//        List<ResponseOrder> ordersList = null;
+//        try {
+//            ordersList = orderServiceClient.getOrders(userId);
+//        } catch (FeignException ex) {
+//            log.error(ex.getMessage());
+//        }
+
+        // ErrorDecoder
+
+
+        // FeignClient
+        List<ResponseOrder> orderList = orderServiceClient.getOrders(userId);
         userDto.setOrders(orderList);
         return userDto;
     }
